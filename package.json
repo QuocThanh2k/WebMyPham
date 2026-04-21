@@ -9,5 +9,8 @@
     "dependencies": {
         "mysql2": "^3.22.2",
         "sharp": "^0.33.0"
+    },
+    "devDependencies": {
+        "@angular/cli": "^21.2.7"
     }
 }
