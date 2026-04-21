@@ -1,0 +1,76 @@
+<!-- Customer List Template -->
+<div class="customer-list-container">
+    <!-- Search Box -->
+    <div class="search-box">
+        <input type="text" placeholder="Tìm kiếm khách hàng..." [(ngModel)]="searchTerm" (keyup.enter)="onSearch()">
+        <button (click)="onSearch()">
+            <i class="fas fa-search"></i> Tìm kiếm
+        </button>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div *ngIf="isLoading" class="loading-spinner">
+        <i class="fas fa-spinner fa-spin"></i> Đang tải dữ liệu...
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="error-message">
+        <i class="fas fa-exclamation-circle"></i> {{ errorMessage }}
+    </div>
+
+    <!-- Customer Table -->
+    <table *ngIf="!isLoading && customers.length > 0" class="customer-table">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Họ tên</th>
+                <th>Email</th>
+                <th>Số điện thoại</th>
+                <th>Ngày đăng ký</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let customer of customers; let i = index">
+                <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
+                <td>{{ customer.fullName }}</td>
+                <td>{{ customer.email }}</td>
+                <td>{{ customer.phone }}</td>
+                <td>{{ customer.registeredDate | date:'dd/MM/yyyy' }}</td>
+                <td>
+                    <button (click)="viewCustomer(customer.id)">Xem</button>
+                    <button (click)="editCustomer(customer.id)">Sửa</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- No Data Message -->
+    <div *ngIf="!isLoading && customers.length === 0" class="no-data">
+        Không có khách hàng nào.
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination" *ngIf="totalPages > 1">
+        <!-- Previous Button -->
+        <button class="pagination-btn" [disabled]="currentPage === 1" (click)="previousPage()">
+            <i class="fas fa-chevron-left"></i> Trước
+        </button>
+
+        <!-- Page Numbers -->
+        <button *ngFor="let page of getPageNumbers()" class="pagination-btn" [class.active]="page === currentPage"
+            (click)="changePage(page)">
+            {{ page }}
+        </button>
+
+        <!-- Next Button -->
+        <button class="pagination-btn" [disabled]="currentPage === totalPages" (click)="nextPage()">
+            Sau <i class="fas fa-chevron-right"></i>
+        </button>
+
+        <!-- Page Info -->
+        <span class="page-info">
+            Trang {{ currentPage }} / {{ totalPages }} ({{ totalRecords }} khách hàng)
+        </span>
+    </div>
+</div>

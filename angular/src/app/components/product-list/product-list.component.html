@@ -1,0 +1,79 @@
+<!-- Product List Template -->
+<div class="product-list-container">
+    <!-- Loading Indicator -->
+    <div *ngIf="isLoading" class="loading-spinner">
+        <i class="fas fa-spinner fa-spin"></i> Đang tải dữ liệu...
+    </div>
+
+    <!-- Error Message -->
+    <div *ngIf="errorMessage" class="error-message">
+        <i class="fas fa-exclamation-circle"></i> {{ errorMessage }}
+    </div>
+
+    <!-- Product Table -->
+    <table *ngIf="!isLoading && products.length > 0" class="product-table">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Hình ảnh</th>
+                <th>Tên sản phẩm</th>
+                <th>Giá</th>
+                <th>Tồn kho</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let product of products; let i = index">
+                <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
+                <td><img [src]="product.imageUrl" [alt]="product.name" class="product-image"></td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.price | currency:'VND' }}</td>
+                <td>{{ product.stock }}</td>
+                <td>
+                    <button (click)="editProduct(product.id)">Sửa</button>
+                    <button (click)="deleteProduct(product.id)">Xóa</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- No Data Message -->
+    <div *ngIf="!isLoading && products.length === 0" class="no-data">
+        Không có sản phẩm nào.
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination" *ngIf="totalPages > 1">
+        <!-- Previous Button -->
+        <button class="pagination-btn" [disabled]="currentPage === 1" (click)="previousPage()">
+            <i class="fas fa-chevron-left"></i> Trước
+        </button>
+
+        <!-- Page Numbers -->
+        <button *ngFor="let page of getPageNumbers()" class="pagination-btn" [class.active]="page === currentPage"
+            (click)="changePage(page)">
+            {{ page }}
+        </button>
+
+        <!-- Next Button -->
+        <button class="pagination-btn" [disabled]="currentPage === totalPages" (click)="nextPage()">
+            Sau <i class="fas fa-chevron-right"></i>
+        </button>
+
+        <!-- Page Info -->
+        <span class="page-info">
+            Trang {{ currentPage }} / {{ totalPages }} ({{ totalRecords }} sản phẩm)
+        </span>
+    </div>
+
+    <!-- Page Size Selector -->
+    <div class="page-size-selector">
+        <label>Số sản phẩm/trang:</label>
+        <select [value]="pageSize" (change)="onPageSizeChange($event)">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+        </select>
+    </div>
+</div>
