@@ -22,7 +22,12 @@
                         "tsConfig": "src/tsconfig.app.json",
                         "assets": [
                             "src/favicon.ico",
-                            "src/assets"
+                            "src/assets",
+                            {
+                                "glob": "**/*",
+                                "input": "src/assets/css",
+                                "output": "/css"
+                            }
                         ],
                         "styles": [
                             "src/style.css"
@@ -54,6 +59,6 @@
         }
     },
     "cli": {
-      "analytics": false
+        "analytics": false
     }
 }
