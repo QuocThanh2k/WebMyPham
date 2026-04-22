@@ -30,7 +30,10 @@
                             }
                         ],
                         "styles": [
-                            "src/style.css"
+                            "src/styles.css",
+                            "src/assets/css/main.css",
+                            "src/assets/css/header.css",
+                            "src/assets/css/responsive.css"
                         ],
                         "scripts": []
                     },

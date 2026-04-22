@@ -1,0 +1,256 @@
+<header>
+    <div class="header-top">
+        <div class="container">
+            <div class="contact-info">
+                <span><i class="fas fa-phone-alt"></i> Hotline: 0702932614</span>
+                <span><i class="fas fa-store"></i> Hệ thống 50+ cửa hàng</span>
+            </div>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-tiktok"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-main">
+        <div class="container">
+            <a routerLink="/" class="logo">
+                <img src="images/logo/logo_backup.png" alt="Thanh Tâm Logo" style="height: 45px; width: auto;"
+                    class="logo-icon">
+                <div class="logo-text">Thanh <span>Tâm</span></div>
+            </a>
+
+            <div class="search-box">
+                <input type="text" placeholder="Tìm kiếm sản phẩm...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+
+            <div class="header-actions">
+                <div class="action-item">
+                    <a routerLink="/login" style="text-decoration: none; color: inherit;">
+                        <span class="icon"><i class="far fa-user"></i></span>
+                        <span class="label">Tài khoản</span>
+                    </a>
+                </div>
+                <div class="action-item cart-icon">
+                    <a routerLink="/cart" style="text-decoration: none; color: inherit;">
+                        <span class="icon"><i class="fas fa-shopping-bag"></i></span>
+                        <span class="cart-count">0</span>
+                        <span class="label">Giỏ hàng</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="nav-menu">
+        <div class="container">
+            <div class="nav-wrapper">
+                <ul>
+                    <li class="nav-item"><a routerLink="/" class="nav-link">Trang chủ</a></li>
+                    <li class="nav-item"><a routerLink="/products" class="nav-link">Danh mục</a></li>
+                    <li class="nav-item"><a routerLink="/brands" class="nav-link">Thương hiệu</a></li>
+                    <li class="nav-item"><a routerLink="/promotions" class="nav-link">Khuyến mãi</a></li>
+                    <li class="nav-item"><a routerLink="/blog" class="nav-link">Blog</a></li>
+                    <li class="nav-item"><a routerLink="/contact" class="nav-link">Liên hệ</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!-- Hero -->
+<div class="login-hero">
+    <div class="container">
+        <h1>Tài Khoản</h1>
+        <p>Đăng nhập hoặc đăng ký để mua sắm</p>
+    </div>
+</div>
+
+<main class="products-page">
+    <div class="container">
+        <div class="breadcrumbs">
+            <a routerLink="/">Trang chủ</a>
+            <span>/</span>
+            <span class="current">Tài khoản</span>
+        </div>
+
+        <div class="auth-container">
+            <div class="auth-wrapper">
+                <!-- Banner -->
+                <div class="auth-banner">
+                    <div class="icon">💄</div>
+                    <h2 id="bannerTitle">Chào Mừng!</h2>
+                    <p id="bannerDesc">Đăng nhập để nhận nhiều ưu đãi đặc biệt</p>
+                    <button id="bannerBtn" class="btn-auth" style="background: white; color: #ff6b9d;"
+                        onclick="switchTab('register')">ĐĂNG KÝ NGAY</button>
+                </div>
+
+                <!-- Form -->
+                <div class="auth-form-section">
+                    <div class="auth-tabs">
+                        <button class="active" onclick="switchTab('login')">Đăng Nhập</button>
+                        <button id="registerTabBtn" style="display: none;" onclick="switchTab('register')">Đăng
+                            Ký</button>
+                        <button id="forgotTabBtn" style="display: none;" onclick="switchTab('forgot')">Quên mật
+                            khẩu</button>
+                    </div>
+
+                    <!-- Login Form -->
+                    <form class="auth-form active" id="loginForm" onsubmit="handleLogin(event)">
+                        <!-- Danh sách tài khoản mặc định -->
+                        <div class="default-accounts">
+                            <p class="default-accounts-title">Tài khoản demo (click để điền):</p>
+                            <div id="defaultAccountsList"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="loginEmail">Email <span>*</span></label>
+                            <input type="email" id="loginEmail" placeholder="Nhập email của bạn" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="loginPassword">Mật khẩu <span>*</span></label>
+                            <div class="password-input">
+                                <input type="password" id="loginPassword" placeholder="Nhập mật khẩu" required>
+                                <span class="password-toggle" onclick="togglePassword('loginPassword')">
+                                    <i class="far fa-eye"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="forgot-password" style="display: flex; justify-content: space-between;">
+                            <a href="#" onclick="switchTab('register')">Đăng ký tài khoản</a>
+                            <a href="#" onclick="switchTab('forgot')">Quên mật khẩu?</a>
+                        </div>
+
+                        <div class="form-group checkbox">
+                            <input type="checkbox" id="rememberMe">
+                            <label for="rememberMe">Ghi nhớ đăng nhập</label>
+                        </div>
+
+                        <button type="submit" class="btn-auth">Đăng Nhập</button>
+                    </form>
+
+                    <!-- Register Form -->
+                    <form class="auth-form" id="registerForm" onsubmit="handleRegister(event)">
+                        <div class="form-group">
+                            <label for="registerName">Họ và tên <span>*</span></label>
+                            <input type="text" id="registerName" placeholder="Nhập họ và tên" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="registerEmail">Email <span>*</span></label>
+                            <input type="email" id="registerEmail" placeholder="Nhập email của bạn" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="registerPhone">Số điện thoại <span>*</span></label>
+                            <input type="tel" id="registerPhone" placeholder="Nhập số điện thoại" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="registerPassword">Mật khẩu <span>*</span></label>
+                            <div class="password-input">
+                                <input type="password" id="registerPassword" placeholder="Nhập mật khẩu" required>
+                                <span class="password-toggle" onclick="togglePassword('registerPassword')">
+                                    <i class="far fa-eye"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="registerConfirmPassword">Xác nhận mật khẩu <span>*</span></label>
+                            <div class="password-input">
+                                <input type="password" id="registerConfirmPassword" placeholder="Nhập lại mật khẩu"
+                                    required>
+                                <span class="password-toggle" onclick="togglePassword('registerConfirmPassword')">
+                                    <i class="far fa-eye"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group checkbox">
+                            <input type="checkbox" id="agreeTerms" required>
+                            <label for="agreeTerms">Tôi đồng ý với <a href="#" style="color: #ff6b9d;">Điều
+                                    khoản</a> và <a href="#" style="color: #ff6b9d;">Chính sách</a></label>
+                        </div>
+
+                        <button type="submit" class="btn-auth">Đăng Ký</button>
+                    </form>
+
+                    <!-- Forgot Password Form -->
+                    <form class="auth-form" id="forgotForm" onsubmit="handleForgotPassword(event)">
+                        <div class="form-group">
+                            <label for="forgotEmail">Email xác thực <span>*</span></label>
+                            <input type="email" id="forgotEmail" placeholder="Nhập email đã đăng ký" required>
+                            <span class="validation-msg" id="emailValid"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="newPassword">Mật khẩu mới <span>*</span></label>
+                            <div class="password-input">
+                                <input type="password" id="newPassword" placeholder="Nhập mật khẩu mới (8+ ký tự)"
+                                    required>
+                                <span class="password-toggle" onclick="togglePassword('newPassword')">
+                                    <i class="far fa-eye"></i>
+                                </span>
+                            </div>
+                            <span class="validation-msg" id="pwValid"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmPassword">Nhập lại mật khẩu mới <span>*</span></label>
+                            <div class="password-input">
+                                <input type="password" id="confirmPassword" placeholder="Nhập lại mật khẩu mới"
+                                    required>
+                                <span class="password-toggle" onclick="togglePassword('confirmPassword')">
+                                    <i class="far fa-eye"></i>
+                                </span>
+                            </div>
+                            <span class="validation-msg" id="confirmValid"></span>
+                        </div>
+
+                        <button type="submit" class="btn-auth" id="forgotBtn" disabled>Đặt lại mật khẩu</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+    <i class="fas fa-check-circle"></i>
+    <span id="toastMessage">Thành công!</span>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Về Thanh Tâm</h4>
+                <p>Chúng tôi cung cấp các sản phẩm mỹ phẩm cao cấp, chính hãng.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Liên kết nhanh</h4>
+                <ul>
+                    <li><a routerLink="/">Trang chủ</a></li>
+                    <li><a routerLink="/products">Sản phẩm</a></li>
+                    <li><a routerLink="/contact">Liên hệ</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Liên hệ</h4>
+                <p>📍 24 CDC ấp An Thuận, xã Mỹ An Hưng, tỉnh Đồng Tháp</p>
+                <p>📞 0702932614</p>
+                <p>📧 quocthanh2614#64;gmail.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Thanh Tâm. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
