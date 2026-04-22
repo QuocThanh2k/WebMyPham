@@ -31,40 +31,24 @@ function walkDir(dir, callback) {
 
 console.log('--- BẮT ĐẦU CẤU HÌNH ROUTING TỰ ĐỘNG ---');
 
-walkDir(srcDir, function (filePath) {
-    // A. Thay thế href thành routerLink trong các file HTML
-    if (filePath.endsWith('.component.html')) {
-        let content = fs.readFileSync(filePath, 'utf8');
-        let originalContent = content;
 
-        for (const [oldHref, newRoute] of Object.entries(linkMap)) {
-            // Regex tìm href="oldHref" hoặc href='oldHref'
-            const regex = new RegExp(`href=["']${oldHref}["']`, 'g');
-            content = content.replace(regex, `routerLink="${newRoute}"`);
-        }
 
-        if (content !== originalContent) {
-            fs.writeFileSync(filePath, content, 'utf8');
-            console.log(`✅ Đã cập nhật routerLink trong: ${path.relative(__dirname, filePath)}`);
-        }
+// B. Tự động Import RouterLink vào các file TS
+if (filePath.endsWith('.component.ts')) {
+    let content = fs.readFileSync(filePath, 'utf8');
+    let originalContent = content;
+
+    if (content.includes('standalone: true') && !content.includes('RouterLink')) {
+        content = `import { RouterLink } from '@angular/router';\n` + content;
+        content = content.replace(/imports:\s*\[(.*?)\]/s, (match, p1) => {
+            const imports = p1.trim() ? p1 + ', RouterLink' : 'RouterLink';
+            return `imports: [${imports}]`;
+        });
+        fs.writeFileSync(filePath, content, 'utf8');
+        console.log(`✅ Đã import RouterLink vào: ${path.basename(filePath)}`);
     }
+}
 
-    // B. Tự động Import RouterLink vào các file TS
-    if (filePath.endsWith('.component.ts')) {
-        let content = fs.readFileSync(filePath, 'utf8');
-        let originalContent = content;
-
-        if (content.includes('standalone: true') && !content.includes('RouterLink')) {
-            content = `import { RouterLink } from '@angular/router';\n` + content;
-            content = content.replace(/imports:\s*\[(.*?)\]/s, (match, p1) => {
-                const imports = p1.trim() ? p1 + ', RouterLink' : 'RouterLink';
-                return `imports: [${imports}]`;
-            });
-            fs.writeFileSync(filePath, content, 'utf8');
-            console.log(`✅ Đã import RouterLink vào: ${path.basename(filePath)}`);
-        }
-    }
-});
 
 // C. Dọn dẹp src/index.html (Xóa mã tĩnh thừa để nhường chỗ cho RouterOutlet)
 const indexHtmlPath = path.join(__dirname, 'src', 'index.html');
